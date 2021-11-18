@@ -6,7 +6,7 @@ from flask import Flask
 #from tensorflow.python.eager.monitoring import Buckets
 #import boto3
 
-app = Flask()
+app = Flask(__name__)
 
 '''
 s3 = boto3.client('s3')
@@ -18,7 +18,7 @@ tf.compat.v1.reset_default_graph()
 sess = gpt2.start_tf_sess()    
 gpt2.load_gpt2(sess, run_name='run1')
 
-@app.route("/")
+@app.route("/shrink")
 def shrink(i_context):
 
     p = (gpt2.generate(sess,
