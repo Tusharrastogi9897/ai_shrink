@@ -43,3 +43,26 @@ def shrink(i_context):
     q = q.split('##')    
     return q
 
+def lambda_handler(event, context):
+
+    InputQuery = event['queryStringParameters']['msg']
+    
+    # warming up the lambda
+    '''
+    if event.get("source") in ["aws.events", "serverless-plugin-warmup"]:
+        print('Lambda is warm!')
+        return {}
+    '''
+    #body of response object
+    res = {}
+    res['message'] = shrink(InputQuery)
+    
+    # response object
+    responseObject = {}
+    responseObject['statusCode'] = 200
+    responseObject['headers'] = {}
+    responseObject['headers']['Content-type'] = 'application/json'
+    responseObject['headers']['Access-Control-Allow-Origin'] = '*'
+    responseObject['body'] = json.dumps(res)
+
+    return responseObject
